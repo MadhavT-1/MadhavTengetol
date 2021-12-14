@@ -1,0 +1,53 @@
+body {
+  background-color: white;
+  color: black;
+}
+img {
+  margin-left: 30px;
+  margin-top: 20px;
+  width: 200px;
+  height: 100%;
+}
+label {
+  margin-left: 30px;
+  margin-top: 20px;
+  font-size: 1.1em;
+  padding: 10px;
+}
+input {
+  margin-left: 30px;
+  margin-top: 20px;
+  font-size: 12px;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+button {
+  margin-bottom: 200px;
+  margin-left: 120px;
+  margin-top: 20px;
+  font-size: 12px;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 4px;
+  background-color: rgb(61, 25, 219);
+  color: white;
+}
+button:hover {
+  background-color: rgb(5, 88, 19);
+  color: white;
+}
+#hobby {
+  margin-left: 45px;
+}
+#dob {
+  margin-left: 10px;
+}
+footer {
+  color: black;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: rgb(201, 194, 194);
+  height: 20%;
+  text-align: center;
+}
