@@ -117,6 +117,9 @@
 
 #################### 	Cube roll up on steroid	###########################
 
+	Cube does all subsets
+	CUBE(a,b,c) 	=> Groupingsets((a,b,c),(a,b),(a,c),(a),(b,c),(b),(c),())
+
 14.	SELECT c.companyname,categoryname,productname,SUM(od.unitprice*quantity)
 	FROM customers AS c
 	NATURAL JOIN orders
