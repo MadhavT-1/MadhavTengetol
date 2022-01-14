@@ -104,6 +104,8 @@
 	================================	Query Plan Cost Calculation	========================
 	
 	#Every table and index is stores as an array of pages of fixed size default 8kb
+	
+			Number of relation pages * seq_page_cost + Number of rows * cpu_tuple_cost + Number of rows * cpu_operator_cost
 
 24.	SET max_parallel_workers_per_gather = 0;
 	EXPLAIN SELECT * FROM performance_test
