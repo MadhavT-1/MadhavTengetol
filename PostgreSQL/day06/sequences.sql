@@ -1,5 +1,7 @@
 	========================	CREATE SEQUENCE		========================
 	
+	Used for => Generating unique numeric identifiers i.e. id fields
+	
 1.	CREATE SEQUENCE test_sequence;
 
 2.	SELECT nextval('test_sequence');
