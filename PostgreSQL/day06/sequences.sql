@@ -59,3 +59,38 @@
 22.	INSERT INTO orders (customerid,employeeid,requireddate,shippeddate)
 	VALUES ('VINET',5,'1996-08-01','1996-08-10') RETURNING orderid;
 	
+	===================	Alter and Delete SEQUENCE	==========================
+
+23.	ALTER SEQUENCE employees_employee_seq RESTART WITH 1000
+	SELECT nextval('employees_employee_seq')
+
+24.	ALTER SEQUENCE orders_orderid_seq RESTART WITH 2000000
+	SELECT nextval('orders_orderid_seq')
+
+25.	ALTER SEQUENCE test_sequence RENAME TO test_sequence_1
+
+26.	ALTER SEQUENCE test_sequence_4  RENAME TO test_sequence_four
+
+27.	DROP SEQUENCE test_sequence_1
+
+28.	DROP SEQUENCE test_sequence_four
+	
+	============================	Using Serial Datatypes	===================
+	
+29.	DROP TABLE IF EXISTS exes;
+
+	CREATE TABLE exes (
+	exid SERIAL,
+	name varchar(255)
+	);
+30.	INSERT INTO exes (name) VALUES ('Carrie') RETURNING exid
+
+31.	DROP TABLE IF EXISTS pets;
+
+32.	CREATE TABLE pets (
+	petid SERIAL,
+	name varchar(255)
+	);
+
+33.	INSERT INTO pets (name) VALUES ('Fluffy') RETURNING petid;
+	
