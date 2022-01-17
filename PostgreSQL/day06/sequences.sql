@@ -77,6 +77,10 @@
 	
 	============================	Using Serial Datatypes	===================
 	
+		smallserial => small int that increments automaically
+		serial 		=> int that increments automatically
+		bigserial 	=> bigint that increments automatically
+	
 29.	DROP TABLE IF EXISTS exes;
 
 	CREATE TABLE exes (
