@@ -91,7 +91,7 @@
 		
 	===========================		FOREIGN KEY	==============================
 	
-		All values must exist in another table`
+		All values must exist in another table
 		
 25.	DROP TABLE IF EXISTS practices;
 
