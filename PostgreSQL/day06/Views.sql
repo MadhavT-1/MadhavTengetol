@@ -83,6 +83,41 @@
 15.	UPDATE protein_products SET unitprice=55 WHERE productid=78;
 
 16.	DELETE FROM protein_products WHERE productid=78;
+
+	======================	With Check Options	=================================
+	
+17.	INSERT INTO north_america_customers
+	(customerid,companyname,contactname,contacttitle,address,city,region,postalcode,country,phone,fax)
+	VALUES ('CFDCM','Catfish Dot Com','Will Bunker','President','Old Country Road','Lake Village','AR','71653','Germany','555-555-5555',null);
+
+18.	SELECT FROM north_america_customers
+	WHERE customerid=’CFDCM’;
+
+19.	CREATE OR REPLACE VIEW north_america_customers  AS
+	SELECT *
+	FROM customers
+	WHERE country in ('USA','Canada','Mexico')
+	WITH LOCAL CHECK OPTION;
+
+20.	INSERT INTO north_america_customers
+	(customerid,companyname,contactname,contacttitle,address,city,region,postalcode,country,phone,fax)
+	VALUES ('CFDCM','Catfish Dot Com','Will Bunker','President','Old Country Road','Lake Village','AR','71653','Germany','555-555-5555',null);
+
+21.	CREATE OR REPLACE VIEW protein_products AS
+	SELECT * FROM products
+	WHERE categoryid in (4,6,8)
+	WITH LOCAL CHECK OPTION;
+
+22.	INSERT INTO protein_products
+	(productid,productname,supplierid,categoryid,discontinued)
+	VALUES (78,'Tasty Tea',12,1,0);
+	
+	======================	Deleting Views	=====================================
+	
+23.	DROP VIEW IF EXISTS customer_order_detailed;
+
+24.	DROP VIEW IF EXISTS supplier_orders;
+	
 		
 	
 	
