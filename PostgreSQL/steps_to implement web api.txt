@@ -1,0 +1,147 @@
+1. npm init -y
+2. npm install cors pg body-parser express pg-hstore sequelize 
+3. create folder=>app,db
+4. go to db folder => sequelize-cli init
+5 change config file data
+	{
+  "development": {
+    "username": "postgres",
+    "password": "YOUR_PASSWORD",
+    "database": "api_author",
+    "host": "localhost",
+    "dialect": "postgres",
+    "port": 5432
+  }
+}
+
+6.	sequelize-cli db:create
+
+7.	sequelize-cli model:generate --name Author --attributes authorName:string,bookName:string
+
+8.	sequelize-cli db:migrate
+
+9.	sequelize-cli seed:generate --name Author
+
+10. Insert data in seeders=>Author.js
+
+	 await queryInterface.bulkInsert('Author', [
+      {
+        authorName: 'J.K. Rowling',
+        bookName: 'Harry Potter and the Philosopher\'s Stone',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        authorName: 'J.K. Rowling',
+        bookName: 'Harry Potter and the Chamber of Secrets',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        authorName: 'J.K. Rowling',
+        bookName: 'Harry Potter and the Prisoner of Azkaban',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ], {});
+	
+	
+12.	go to command prompt
+
+		sequelize-cli db:seed:all
+		
+13.	create files app>app-route.js & app>author-controller.js
+
+			========================== app-route.js	====================
+			module.exports = app => {
+    const express = require('express');
+    const router = express.Router();
+    const authorController = require('./author-controller');
+
+
+    router.get('/authors', authorController.findAll);
+    router.get('/authors/:id', authorController.findById);
+    router.post('/authors/create', authorController.create);
+    router.put('/authors/update/:id', authorController.update);
+    router.delete('/authors/delete/:id', authorController.delete);
+
+
+    app.use('/app', router);
+
+		}
+		
+		
+		=======================	author-controller.js	=====================
+		
+		const db = require('../db/models');
+const Author = db.Author;
+
+exports.findAll = (req, res) => {
+    Author.findAll()
+        .then(authors => {
+            res.json(authors);
+        })
+        .catch(err => {
+            res.send(err);
+        });
+};
+
+exports.findById = (req, res) => {
+    const id = parseInt(req.params.id);
+    Author.findByPk(id)
+        .then(author => {
+            res.json(author);
+        })
+        .catch(err => {
+            res.send(err);
+        });
+};
+
+exports.create = (req, res) => {
+    Author.create({
+        authorName: req.body.authorName,
+        bookName: req.body.bookName
+    })
+        .then(author => {
+            res.json(author);
+        })
+        .catch(err => {
+            res.send(err);
+        });
+};
+
+exports.update = (req, res) => {
+    const id = parseInt(req.params.id);
+    Author.update({
+        authorName: req.body.authorName,
+        bookName: req.body.bookName
+    }, {
+        where: {
+            id: id
+        }
+    })
+        .then(author => {
+            res.json("Successfully updated author with id = " + id);
+        })
+        .catch(err => {
+            res.send(err);
+        });
+};
+
+exports.delete = (req, res) => {
+    const id = parseInt(req.params.id);
+    Author.destroy({
+        where: {
+            id: id
+        }
+    })
+        .then(author => {
+            res.json("Successfully deleted author with id = " + id);
+        })
+        .catch(err => {
+            res.send(err);
+        });
+}
+
+
+14.	Done...

@@ -1,0 +1,398 @@
+Creating Web-API 
+00. npm install yarn sequelize-cli
+01. mkdir web-api
+02. cd web-api
+03. npm init
+04. install yarn -g
+05. yarn add express mysql2 sequelize body-parser cors
+06. open package.json
+ 	change "main": "index.js" to "main": "server.js", 
+	change "scripts": {    "test": "echo \"Error: no test specified\" && exit 1"  }
+	TO     "scripts": {    "start": "nodemon server.js"  }
+07. mkdir app
+	create file app-route.js and person.controlle.js in app folder as follows:
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	module.exports=app=>{
+	const express=require('express');
+	const router=express.Router();
+	const PersonController=require('./person.controller');
+	//Main url: http://localhost:3500/app/
+	
+	//GET : All Person :/persons 
+	router.get('/persons',PersonController.findAll);
+	//GET : Person by id :/persons/? 
+	router.get('/persons/:id',PersonController.findOne);
+	//POST : Add New Person :/persons/add 
+	router.post('/persons/add',PersonController.create);
+	//PUT : Add New Person :/persons/add 
+	router.put('/persons/edit/:id',PersonController.update);
+	//DELETE : Add New Person :/persons/add 
+	router.delete('/persons/delete/:id',PersonController.delete);
+	app.use('/app',router);
+	}
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+08. create file server.js
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	const express=require('express');
+	const cors=require('cors');
+	const bodyParser=require('body-parser');
+	const app=express();
+	// set port, listen for requests
+	const PORT = process.env.PORT || 3500;
+	//Client server consuming this service
+	const CORS_OPTINS={origin:"http://localhost:3000"}
+	//allow the cross origing resource sharing
+	app.use(cors(CORS_OPTINS));
+	//parse request of Content-Type:application/json
+	app.use(bodyParser.json());
+	//parse request of Content-Type:application/x-www-form-urlencoded
+	app.use(bodyParser.urlencoded({extended:true}));
+
+	//sync with database
+	const DB=require('./db/models');
+	DB.sequelize.sync();
+	
+	//simple route
+	app.get('/',(req,resp)=>{
+		resp.json({"message":"Welcome to express server!"});
+	});
+	
+	require('./app/app-route')(app);
+	
+	app.listen(PORT,()=>{
+		console.log(`http://localhost:${PORT}/app  listening`);
+	})
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+09. mkdir db
+10. cd db
+11. sequelize-cli init 
+	Above command will create folders in db folder config,migrations,models,seeders
+	config->db connection properties for development,production and testing
+	models->definition of table
+	seeders->creates sample record as connects and as shut down deletes all records
+	migrations-> creates table in database
+12. open config/config.json 
+	{
+	"development": {
+		"username": "root",
+		"password": "root",
+		"database": "dev_db",
+		"host": "127.0.0.1",
+		"dialect": "mysql"
+	},
+	"test": {
+		"username": "root",
+		"password": "root",
+		"database": "test_db",
+		"host": "127.0.0.1",
+		"dialect": "mysql"
+	},
+	"production": {
+		"username": "root",
+		"password": "root",
+		"database": "prd_db",
+		"host": "127.0.0.1",
+		"dialect": "mysql"
+	}
+	}
+	delete "test" and "production" values and keep below data
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	{
+	"development": {
+		"username": "root",
+		"password": "root",
+		"database": "dev_db",
+		"host": "127.0.0.1",
+		"dialect": "mysql"
+	}
+	}
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@	
+13. To crate database dev_db
+	>sequelize-cli db:create
+
+	Sequelize CLI [Node: 12.13.0, CLI: 6.2.0, ORM: 6.6.2]
+	
+	Loaded configuration file "config\config.json".
+	Using environment "development".
+	Database dev_db created.
+   
+14. To create Person table 
+	>sequelize-cli model:generate --name Person --attributes firstName:string,lastName:string
+
+	Sequelize CLI [Node: 12.13.0, CLI: 6.2.0, ORM: 6.6.2]
+	
+	New model was created at D:\training\2021\samples\web-api\db\models\person.js .  
+	New migration was created at D:\training\2021\samples\web-api\db\migrations\20210505182627-create-person.js .
+15. Open migrations\20210505182627-create-person.js  file
+	In above file sequelize write the createtable query for person table
+	It creates primary key column called id 
+	It also generate two columns createdAt and updatedAt
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@	
+	'use strict';
+	module.exports = {
+	up: async (queryInterface, Sequelize) => {
+		await queryInterface.createTable('People', {
+		id: {
+			allowNull: false,
+			autoIncrement: true,
+			primaryKey: true,
+			type: Sequelize.INTEGER
+		},
+		firstName: {
+			type: Sequelize.STRING
+		},
+		lastName: {
+			type: Sequelize.STRING
+		},
+		createdAt: {
+			allowNull: false,
+			type: Sequelize.DATE
+		},
+		updatedAt: {
+			allowNull: false,
+			type: Sequelize.DATE
+		}
+		});
+	},
+	down: async (queryInterface, Sequelize) => {
+		await queryInterface.dropTable('People');
+	}
+	};
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@	  
+16. To create the table People (plural of person) in dev_db execute below command
+	>sequelize-cli db:migrate
+
+	Sequelize CLI [Node: 12.13.0, CLI: 6.2.0, ORM: 6.6.2]
+	
+	Loaded configuration file "config\config.json".
+	Using environment "development".
+	== 20210505182627-create-person: migrating =======
+	== 20210505182627-create-person: migrated (1.491s)
+17. To create the seed file execute below command
+	sequelize-cli seed:generate --name person
+	>sequelize-cli seed:generate --name person    
+
+	Sequelize CLI [Node: 12.13.0, CLI: 6.2.0, ORM: 6.6.2]
+	
+	seeders folder at "D:\training\2021\samples\web-api\db\seeders" already exists.  
+	New seed was created at D:\training\2021\samples\web-api\db\seeders\20210505183601-person.js .
+18. Open seeders\20210505183601-person.js  update it as follows:
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@	  
+	'use strict';
+	
+	module.exports = {
+	up: async (queryInterface, Sequelize) => {
+		await queryInterface.bulkInsert('People', [
+		{
+		firstName: 'Gorden',
+		lastName: 'Bombay',
+		createdAt:new Date(),
+		updatedAt:new Date()
+		},
+		{
+		firstName: 'John',
+		lastName: 'Owen',
+		createdAt:new Date(),
+		updatedAt:new Date()
+		}
+	], {});
+	
+	},
+	
+	down: async (queryInterface, Sequelize) => {
+		await queryInterface.bulkDelete('People', null, {});
+	}
+	};
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@	  	
+19. Execute the seed file as follows 
+	>sequelize-cli db:seed:all
+
+	Sequelize CLI [Node: 12.13.0, CLI: 6.2.0, ORM: 6.6.2]
+	
+	Loaded configuration file "config\config.json".
+	Using environment "development".
+	== 20210505183601-person: migrating =======
+	== 20210505183601-person: migrated (0.288s)
+20. Check the mysql database 
+mysql> use dev_db;
+Database changed
+mysql> select * from People;
++----+-----------+----------+---------------------+---------------------+
+| id | firstName | lastName | createdAt           | updatedAt           |
++----+-----------+----------+---------------------+---------------------+
+|  1 | Gorden    | Bombay   | 2021-05-05 18:44:33 | 2021-05-05 18:44:33 |
+|  2 | John      | Owen     | 2021-05-05 18:44:33 | 2021-05-05 18:44:33 |
++----+-----------+----------+---------------------+---------------------+
+2 rows in set (0.00 sec)
+21. open person.controller.js from app folder as follows:
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@	  	
+	const db = require('../db/models');
+	const Person = db.Person;
+	//select * from people;
+	exports.findAll = (req, resp) => {
+		Person.findAll()
+			.then((data) => { resp.json(data); })
+			.catch((err) => {
+				resp.status(500).send({
+					message: err.message || " Some error retriving People data"
+				})
+			})
+	
+	}
+	//select * from people where id=?
+	exports.findOne = (req, resp) => {
+		const id=req.params.id;
+	
+		Person.findByPk(id)
+			.then(data=>{resp.send(data)})
+			.catch((err) => {
+				resp.status(500).send({
+					message: err.message || ` Some error retriving Person data with id ${id}`
+				})
+			})
+	}
+	//insert into people (firstName,lastName,createdAt,updatedAt)
+	// values(?,?,?,?)
+	exports.create = (req, resp) => {
+		if(!req.body.firstName){
+			res.status(400).send({
+				message: "Content can not be empty!"
+			});
+			return;
+		}
+		const newPerson={
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			createdAt:new Date(),
+			updatedAt:new Date()
+		}
+		Person.create(newPerson)
+			.then(data=>{resp.send(data);})
+			.catch((err) => {
+				resp.status(500).send({
+					message: err.message || " Some error Creating new Person data"
+				})
+			})
+	}
+	//update people set firstName=?, lastName=? where id=?
+	exports.update = (req, resp) => {
+		const id = req.params.id;
+	
+		Person.update(req.body, { where: { id: id } })
+			.then(num => {
+				if (num == 1) {
+				resp.send({
+					message: `People with id ${id} updated successfully.`
+				});
+				} else {
+				resp.send({
+					message: `Cannot update Person with id=${id}. Maybe Person was not found or req.body is empty!`
+				});
+				}
+			})
+			.catch((err) => {
+				resp.status(500).send({
+					message: err.message || " Some error retriving People data"
+				})
+			})
+	}
+	//delete from people where id=?
+	exports.delete = (req, resp) => {
+		const id = req.params.id;
+		Person.destroy({ where: { id: id } })
+			.then(num => {
+				if (num == 1) {
+					resp.send({ message: `Person with id=${id} deleted successfully!` });
+				} else {
+					resp.send({ message: `Cannot delete Person with id=${id}. Maybe Person was not found!` });
+				}
+			})
+			.catch((err) => {
+				resp.status(500).send({
+					message: err.message || " Could not delete Person with id=" + id
+				})
+			})
+	}
+	
+22.  start the web-api server by below command
+	>yarn start
+	yarn run v1.22.10
+	$ nodemon server.js
+	[nodemon] 2.0.7
+	[nodemon] to restart at any time, enter `rs`
+	[nodemon] watching path(s): *.*
+	[nodemon] watching extensions: js,mjs,json
+	[nodemon] starting `node server.js`
+	http://localhost:3500/app  listening
+	Executing (default): CREATE TABLE IF NOT EXISTS `People` (`id` INTEGER NOT NULL auto_increment , `firstName` VARCHAR(255), `lastName` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+	Executing (default): SHOW INDEX FROM `People` FROM `dev_db`
+	
+23. Test below on Postman:
+Method	:GET			
+URL 	: http://localhost:3500/ 	
+Output	:
+		{
+			"message": "Welcome to express server!"
+		}
+Method	:GET			
+URL 	: http://localhost:3500/app/persons
+Output	:
+			[
+				{
+					"id": 1,
+					"firstName": "Gorden",
+					"lastName": "Bombay",
+					"createdAt": "2021-05-05T18:44:33.000Z",
+					"updatedAt": "2021-05-05T18:44:33.000Z"
+				},
+				{
+					"id": 2,
+					"firstName": "John",
+					"lastName": "Owen",
+					"createdAt": "2021-05-05T18:44:33.000Z",
+					"updatedAt": "2021-05-05T18:44:33.000Z"
+				}
+			]
+Method	: GET			
+URL 	: http://localhost:3500/app/persons/1
+Output	:		
+			{
+				"id": 1,
+				"firstName": "Gorden",
+				"lastName": "Bombay",
+				"createdAt": "2021-05-05T18:44:33.000Z",
+				"updatedAt": "2021-05-05T18:44:33.000Z"
+			}	
+Method	: POST			
+URL 	: http://localhost:3500/app/persons/add
+body(raw+json):
+				{
+					"firstName": "Nelson",
+					"lastName": "Mandela",
+					"createdAt": "2021-05-05T18:44:33.000Z",
+					"updatedAt": "2021-05-05T18:44:33.000Z"
+				}					
+Output	:
+			{
+				"id": 3,
+				"firstName": "Nelson",
+				"lastName": "Mandela",
+				"createdAt": "2021-05-05T19:36:16.185Z",
+				"updatedAt": "2021-05-05T19:36:16.188Z"
+			}		
+Method	: PUT			
+URL 	: http://localhost:3500/app/persons/edit/2
+body(raw+json):
+				{
+					"lastName": "Smith"
+				}					
+Output	:
+			{
+				"message": "Person with id 2 updated successfully."
+			}			
+Method	: DELETE			
+URL 	: http://localhost:3500/app/persons/delete/3
+Output	:
+			{
+				"message": "Person with id=3 deleted successfully!"
+			}
