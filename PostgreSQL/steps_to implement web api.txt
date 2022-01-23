@@ -1,5 +1,7 @@
 1. npm init -y
 2. npm install cors pg body-parser express pg-hstore sequelize 
+
+	goto	package.json : node server.js => nodemon server.js
 3. create folder=>app,db
 4. go to db folder => sequelize-cli init
 5 change config file data
