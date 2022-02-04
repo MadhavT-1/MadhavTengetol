@@ -1,0 +1,17 @@
+.responsive {
+  width: 100%;
+  height: auto;
+}
+.card{
+
+  transition: all 0.2s ease;
+
+  /* cursor: pointer; */
+
+}
+
+.card:hover{
+
+  transform: scale(1.08);
+
+}

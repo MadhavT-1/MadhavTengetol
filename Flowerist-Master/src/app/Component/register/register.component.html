@@ -1,0 +1,149 @@
+<section class="">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-10">
+        <div class="card rounded-3 text-black">
+          <div class="row g-0">
+            <div class="col-lg-6" style="background-color: rgb(145, 236, 150);">
+              <div class="card-body p-md-5 mx-md-4">
+
+                <div class="text-center">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+                    style="width: 185px;" alt="logo">
+                  <h4 class="mt-1 mb-5 pb-1">FLOWERIEST</h4>
+                </div>
+                <div>
+                  <form [formGroup]="registrationForm" (ngSubmit)="onRegistrationFormSubmit()">
+                    <div>
+                      <label for="firstName" class="form-label">First Name</label>
+                      <input
+                      type="text"
+                      formControlName="firstName"
+                      class="form-control ">
+                      <div *ngIf="registrationFormControl['firstName'].touched && registrationFormControl['firstName'].invalid" class="alert alert-danger">Enter First Name
+                        <div *ngIf="registrationFormControl['firstName'].errors && registrationFormControl['firstName'].errors['required']"></div>
+                        <div *ngIf="registrationFormControl['firstName'].errors && registrationFormControl['firstName'].errors['minlength']">Name should be 3 character.</div>
+                      </div>
+
+                    </div>
+
+
+                    <div>
+                       <label class="form-label" for="lastName"
+                          >Last Name</label
+                        >
+                          <input
+                            type="text"
+                            name="lastName"
+                            formControlName="lastName"
+                            class="form-control form-control-xl"
+                            required
+                          />
+
+
+                        <div *ngIf="registrationFormControl[('lastName')].touched && registrationFormControl['lastName'].invalid" class="alert alert-danger">Enter Last Name
+                          <div *ngIf="registrationFormControl['lastName'].errors && registrationFormControl['lastName'].errors['required']"></div>
+                          <div *ngIf="registrationFormControl[('lastName')].errors && registrationFormControl[('lastName')].errors[('minlength')]">Name should be 3 character.</div>
+                        </div>
+                    </div>
+
+                    <div>
+
+                      <label class="form-label" for="emailAddress"
+                            >Email</label
+                          >
+                          <input
+                            type="email"
+                            name="email"
+                            formControlName="email"
+                            class="form-control form-control-xl"
+                            required
+                          />
+                          <div *ngIf="registrationFormControl['email'].touched && registrationFormControl['email'].invalid" class="alert alert-danger">
+                            <div *ngIf="registrationFormControl['email'].errors && registrationFormControl['email'].errors['required']">Email is required.</div>
+                            <div *ngIf="registrationFormControl['email'].errors && registrationFormControl['email'].errors['Email']">Please, enter valid email address.</div>
+                        </div>
+
+                    </div>
+                    <!-- </div> -->
+
+
+                    <div>
+                      <label class="form-label" for="phoneNumber"
+                            >Contact Number</label
+                          >
+                          <input
+                            type="tel"
+                            name="contact"
+                            formControlName="contact"
+                            class="form-control-xl form-control"
+                          />
+                          <div *ngIf="registrationFormControl['contact'].touched && registrationFormControl['contact'].invalid" class="alert alert-danger">
+
+                            <div *ngIf="registrationFormControl['contact'].errors && registrationFormControl['contact'].errors['required']">
+                              <span >Please Enter contact Number.</span>
+                            </div>
+
+                          </div>
+                    </div>
+
+                    <div>
+                      <label for="address" class="form-label">Address</label>
+                      <input formControlName="address"  type="text" class="form-control" />
+
+                      <div *ngIf="registrationFormControl['address'].touched && registrationFormControl['address'].invalid" class="alert alert-danger">
+                        <div *ngIf="registrationFormControl['address'].errors && registrationFormControl['address'].errors['required']">Address is required.</div>
+                    </div>
+
+                    </div>
+
+
+                    <div>
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" formControlName="password" name="password" class="form-control"/>
+
+                      <div *ngIf="registrationFormControl['password'].errors && registrationFormControl['password'].errors['required']">
+                        <div *ngIf="registrationFormControl['password'].touched && registrationFormControl['password'].invalid" class="alert alert-danger">
+                          <span >Please Enter password </span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div>
+                      <label for="confirmpassword" class="form-label">Confirm Password</label>
+                      <input type="password" formControlName="confirmPassword" name="confirmPassword" class="form-control"/>
+                      <div *ngIf="registrationFormControl['confirmPassword'].errors && registrationFormControl['confirmPassword'].errors['required']">
+                      </div>
+                      <div *ngIf="registrationFormControl['confirmPassword'].touched && registrationFormControl['confirmPassword'].invalid" class="alert alert-danger">
+                        <span >Please Confirm password </span>
+                      </div>
+                    </div>
+
+
+
+
+                    <div>
+                      <button class="btn btn-lg gradient-custom-2 text-white mt-4 pr-4 pl-4" type="submit">
+
+                        Register
+                      </button>
+                      <a routerLink="../login" class="btn btn-link mt-4 pr-4 pl-4">Cancel</a>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+              <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                <h4 class="mb-4">We are more than just a Floweriest</h4>
+                <p class="small mb-0">Flowers and flower bouquets have been used since eternity to express any emotion. Every occasion can be celebrated with flowers. Whether it is birthday, anniversaries, retirement or promotion you can send flowers to Australia from our diverse collection of flowers online. Bring the charm to any occasion, explore our online collection now.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

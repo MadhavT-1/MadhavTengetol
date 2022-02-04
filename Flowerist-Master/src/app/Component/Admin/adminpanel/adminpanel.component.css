@@ -1,0 +1,60 @@
+.row{
+display: grid;
+
+height: 50px;
+grid-template-columns: auto auto auto;
+margin: auto;
+/* background-color: yellow; */
+/* border: 2px solid red; */
+}
+.col{
+  border: 2px solid blue;
+  text-align: center;
+  padding-top: 10px;
+
+  width: 100%;
+}
+.col a{
+  text-decoration: none;
+  /* color: antiquewhite; */
+  color: black;
+}
+
+.container{
+  /* height: 100vh; */
+  height: max-content;
+}
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .container {
+    flex-direction: column-reverse;
+  }
+  .col {
+    margin-bottom: 20px;
+  }
+}
+.labels{
+  text-align: right;
+  padding-right: 20px;
+}
+.inputs{
+  margin-right: 50px;
+}
+input{
+  max-width: 14em;
+}
+label{
+  color: white;
+}
+button{
+  padding-left: 5px;
+  padding-right: 5px;
+  border: 2px solid #004225;
+}
+.btn-design{
+  width: 100%;
+  background: transparent;
+  border: 0;
+}

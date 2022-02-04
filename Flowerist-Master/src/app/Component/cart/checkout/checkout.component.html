@@ -1,0 +1,77 @@
+<h1 class="p-4">Checkout Form</h1>
+
+<div class="row p-3">
+  <div class="col-50">
+    <div class="container">
+      <form class="" >
+
+        <div class="row">
+          <div class="col-12 m5-10">
+            <h3>Billing Address</h3>
+            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+            <input type="text" id="fname" name="firstname" placeholder="Full Name" class="form-control">
+            <label for="email"><i class="fa fa-envelope"></i> Email</label>
+            <input type="text" id="email" name="email" placeholder="john@example.com">
+            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+            <input type="text" id="adr" name="address" placeholder="Address">
+            <label for="city"><i class="fa fa-institution"></i> City</label>
+            <input type="text" id="city" name="city" placeholder="Mumbai">
+
+            <div class="row">
+              <div class="col-50">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" placeholder="MH">
+              </div>
+              <div class="col-50">
+                <label for="zip">Zip</label>
+                <input type="text" id="zip" name="zip" placeholder="410001">
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+          <!-- End of Payment Method -->
+        </div>
+        <label>
+          <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+        </label>
+
+        <div class="col form-check">
+          <h3>Payment</h3>
+          <input type="radio" class="form-check-input" checked>
+
+          <label for="fname">Cash On Delivery</label>
+
+        </div>
+        <input type="submit" value="Place Order" (click)="checkOut()" class="btn">
+
+
+      </form>
+    </div>
+  </div>
+  <div class="col-25">
+    <div class="container" >
+      <h4 >Cart <span class="price" style="color:black" >
+        <i class="fa fa-shopping-cart"></i>
+        {{getQuantity()}}
+        <b>{{totalQuantity}}</b></span></h4>
+      <div *ngFor="let product of cart">
+        <!-- <h4>Cart <span class="price" style="color:black" >
+          <i class="fa fa-shopping-cart"></i>
+          <b>{{product.productQuantity}}</b></span></h4> -->
+        <p><a href="#">{{product.productName}}</a>
+        <span class="price">{{product.productPrice}}</span></p>
+        <!-- <p><a href="#">Product 2</a> <span class="price">$5</span></p>
+        <p><a href="#">Product 3</a> <span class="price">$8</span></p>
+        <p><a href="#">Product 4</a> <span class="price">$2</span></p> -->
+        <hr>
+
+      </div>
+      <p>Total <span class="price" style="color:black"><b>{{total.toFixed(2) | currency: 'INR'}}</b></span></p>
+    </div>
+
+  </div>
+</div>

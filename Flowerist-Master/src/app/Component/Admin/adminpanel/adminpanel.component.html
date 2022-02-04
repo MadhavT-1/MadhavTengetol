@@ -1,0 +1,218 @@
+<div class="container" >
+  <!-- Tabs -->
+  <div class="text-center " >
+
+    <div class="pt-2" style="overflow-x:auto;">
+
+      <table class="table table-dark table-bordered" >
+        <thead style="background-color: #004225" >
+          <tr>
+            <th><button type="submit" class="btn btn-success btn-design" (click)="onNew()" >
+              Add&nbsp;Flower
+            </button></th>
+
+            <th><button type="submit" class="btn btn-success btn-design" (click)="showList()">
+              Show&nbsp;Products
+            </button></th>
+
+            <th><button type="submit" class="btn btn-success btn-design" (click)="getUsers()">
+          Show&nbsp;Users
+        </button></th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+  </div>
+  <!-- End Tabs -->
+
+  <!-- Show All Data -->
+<div style="overflow-x:auto;">
+  <table class="table text-light mt-2 table-dark" *ngIf="showData">
+    <thead style="background-color: #004225;">
+      <tr>
+        <th>#</th>
+
+        <th>Name</th>
+
+        <th>Description</th>
+
+        <th>Image Link</th>
+
+        <th>Price</th>
+
+        <th>Available&nbsp;Quantity</th>
+
+        <th> Update</th>
+        <th> Delete</th>
+      </tr>
+    </thead>
+
+    <tbody class="text-dark" style="background-color: rgb(145, 236, 150);">
+      <tr *ngFor="let product  of products let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+
+        <td>{{ product.name }}</td>
+
+        <td>{{ product.description | slice: 0:35 }}</td>
+
+        <td>{{ product.image | slice: 0:20}}</td>
+
+        <td>{{ product.price }}</td>
+        <td>{{ product.available_qty }}</td>
+
+        <td>
+          <button type="button" class="btn btn-info" (click)="onEdit(i)">
+            Edit
+          </button>
+        </td>
+
+        <td>
+          <button type="button" class="btn btn-danger" (click)="onDelete(i)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- <div class="text-right">
+    <button type="submit" class="btn btn-primary" (click)="onNew()">
+      New
+    </button>
+  </div> -->
+</div>
+  <!-- End Show All data -->
+
+<!-- Add new product  -->
+
+<div class="container" *ngIf="showNew" style="overflow-x:auto;">
+  <div class="card bg-transparent border-0">
+    <form (ngSubmit)="onSave()">
+    <table class="table table-borderless" style="overflow-x: auto;">
+      <tbody>
+        <tr>
+          <td class="col-2 labels"><label for="name-input"
+            >Name</label></td>
+          <td class="col-4 inputs"><input
+            class="form-control"
+            type="text"
+            [(ngModel)]="form.name"
+            name="name"
+          /></td>
+        </tr>
+        <tr>
+          <td class="col-2 labels"><label class="form-label">Description</label></td>
+          <td class="col-4 inputs"><input
+            class="form-control"
+            type="text"
+            [(ngModel)]="form.description"
+            name="description"/></td>
+        </tr>
+
+        <tr>
+          <td class="col-2 labels"><label for="image-input" class="form-label">Image Link</label></td>
+          <td class="col-4 inputs"><input
+            class="form-control"
+            type="text"
+            [(ngModel)]="form.image"
+            name="image"/></td>
+        </tr>
+
+        <tr>
+          <td class="col-2 labels"><label for="price-input" class="form-label">Price</label></td>
+          <td class="col-4 inputs"><input
+            class="form-control"
+            type="number"
+            [(ngModel)]="form.price"
+            name="price"/></td>
+        </tr>
+
+
+        <tr>
+          <td class="col-2 labels"><label for="quantity-input" class="form-label">Quantity</label></td>
+          <td class="col-4 inputs"><input
+            class="form-control"
+            type="number"
+            [(ngModel)]="form.available_qty"
+            name="available_qty"/></td>
+        </tr>
+        <tr>
+          <td class="col-2 labels"><button type="submit" class="btn btn-success p-2">{{ submitType }}</button></td>
+          <td class="col-4"><button type="submit" class="btn btn-secondary" (click)="onCancel()">Cancel</button></td>
+        </tr>
+
+      </tbody>
+    </table>
+
+
+
+
+    </form>
+  </div>
+
+</div>
+
+<!-- end add new product  -->
+
+<br />
+<!-- Show Users table -->
+<div style="overflow-x:auto;">
+<table class="table text-light table-dark" *ngIf="showUsers">
+  <thead style="background-color: #004225;">
+      <tr>
+          <th >ID</th>
+          <th >Name</th>
+          <th>Email</th>
+          <th >Contact</th>
+          <th >Address</th>
+        </tr>
+  </thead>
+
+  <tbody class="text-dark" style="background-color: rgb(145, 236, 150);">
+    <tr  *ngFor="let user of userList">
+      <td >{{user.id}}</td>
+      <td >{{user.firstname}}&nbsp;{{user.lastname}}</td>
+      <td >{{user.email}}</td>
+      <td >{{user.contact}}</td>
+      <td >{{user.address}}</td>
+
+    </tr>
+  </tbody>
+
+</table>
+</div>
+<!--Enn Show Users table -->
+
+<!-- Show orders table -->
+<div style="overflow-x:auto;" *ngIf="!showOrders">
+<table class="table table-dark">
+  <thead style="background-color: #004225;">
+    <tr>
+      <th>#</th>
+      <th>Order Date</th>
+      <th>User Id</th>
+      <th>Product id</th>
+      <th>Product Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Total</th>
+
+    </tr>
+  </thead>
+  <tbody class="text-dark" style="background-color: rgb(145, 236, 150);;">
+    <tr *ngFor="let order of orderDetails let i = index">
+      <td>{{i+1}}</td>
+      <td>{{order.orderdate}}</td>
+      <td>{{order.userid}}</td>
+      <td>{{order.productid}}</td>
+      <td>{{order.productname}}</td>
+      <td>{{order.quantity}}</td>
+      <td>{{order.price}}</td>
+      <td>{{order.total}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!-- End Show order table -->
+</div>

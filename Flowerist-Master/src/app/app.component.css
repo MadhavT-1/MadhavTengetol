@@ -1,0 +1,31 @@
+/* .bg-color{ */
+  /* background: #94c997;
+
+background: -webkit-linear-gradient(top left, #FCF19C, #DBC91E);
+
+background: -moz-linear-gradient(top left, #FCF19C, #DBC91E);
+
+background: linear-gradient(to bottom right, #FCF19C, #DBC91E);
+ */
+ /* background-image: url('https://www.pixelstalk.net/wp-content/uploads/2016/11/Flowers-Garden-HD-Wallpapers-free-for-desktop-768x480.jpg'); */
+/* } */
+.bg-color{
+  /* background-image: url('https://www.desktopbackground.org/download/o/2014/12/02/864968_gardens-wallpaper-beautiful-spain-roses-in-garden-hd-wallpapers_1920x1200_h.jpg'); */
+  /* background-repeat: no-repeat; */
+  background-color: #00A86B;
+
+  /* opacity: 1.5; */
+
+}
+/* main{
+  margin-top: 50px;
+} */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+

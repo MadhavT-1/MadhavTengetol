@@ -1,0 +1,64 @@
+<div class="container bg-transparent p-2">
+  <div class="row">
+    <div class="col-4">
+      <div class="card p-4" *ngFor="let user of userInfo">
+        <div class=" p-2 ml4"><strong> Welcome {{user.firstname}}</strong> </div>
+        <div style="overflow-x: auto;">
+        <div class="card-img-top ">
+          <img src="https://www.pngkey.com/png/detail/115-1150152_default-profile-picture-avatar-png-green.png" alt="UserName" srcset="">
+        </div>
+      </div>
+        <div class="card-title"><h5>{{user.firstname}}&nbsp;{{user.lastname}}</h5></div>
+        <hr>
+        <div class="card-text">{{user.email}}</div>
+        <hr>
+        <div class="card-text">{{user.contact}}</div>
+        <hr>
+        <div class="card-text">{{user.address}}</div>
+
+      </div>
+    </div>
+
+    <div class="col-8">
+
+        <div class="card">
+          <div class="col-12">
+            <div class="" style="overflow-x: auto;">
+              <span><strong>Last Orders</strong></span>
+              <table class="table"  >
+
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>Product Quantity</th>
+                    <th>Product Price</th>
+                    <th>Order&nbsp;Date&hyphen;Time</th>
+                  </tr>
+                </thead>
+
+                <tbody style="overflow-y: hidden; overflow-x: hidden;">
+                  <tr *ngFor="let order of lastOrders let i = index" >
+                    <td>{{i+1}}</td>
+                    <td>{{order.productname}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>{{order.price}}</td>
+                    <td>{{order.createdAt  |date: 'medium' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="" style="width: 100%;">
+              <!-- <app-cart></app-cart> -->
+            </div>
+          </div>
+
+        </div>
+
+
+
+
+
+    </div>
+  </div>
+</div>

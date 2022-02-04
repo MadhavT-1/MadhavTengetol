@@ -1,0 +1,10 @@
+.container-new{
+  width: 100%;
+  /* border: 5px solid red; */
+  margin: auto;
+}
+
+span{
+  font-size: 2em;
+  padding:2em
+}
